@@ -1,3 +1,4 @@
+import "./style.css";
 ;(async ()=>{
     const nameField = document.querySelector('#nameProfile');
     const descriptionField = document.querySelector('#descriptionProfile');
