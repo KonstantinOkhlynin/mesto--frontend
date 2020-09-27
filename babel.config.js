@@ -1,3 +1,4 @@
+
 const presets = [
   [
     "@babel/env",
@@ -14,5 +15,3 @@ const presets = [
     }
   ],
 ];
-
-module.exports = { presets }; 
