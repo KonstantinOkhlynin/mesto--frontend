@@ -5,14 +5,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const webpack = require('webpack');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development' ? 'http://zascriptovan.github.io/Mesto/' : 'https://zascriptovan.github.io/Mesto/';
 module.exports = {
     entry: { main: './src/index.js'},
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].[chunkhash].js'
     },
-    // main: './src/index.js'
     module: {
         rules: [{ // тут описываются правила
             test: /\.js$/, // регулярное выражение, которое ищет все js файлы
@@ -23,7 +22,12 @@ module.exports = {
                 {
                     test: /\.css$/, // применять это правило только к CSS-файлам
                     use: [(isDev ? 'style-loader' : MiniCssExtractPlugin.loader),
-                    'css-loader', 
+                    {
+                        loader:'css-loader',
+                        options: {
+                            importLoaders: 2
+                        } 
+                    }, 
                     'postcss-loader'] // к этим файлам нужно применить пакеты, которые мы уже установили
                 },
                 {
