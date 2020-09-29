@@ -1,10 +1,12 @@
 export class Api{
     constructor(token,group){
+        const serverUrl = NODE_ENV === 'development' ? `http://nomoreparties.co/${group}` : `https://nomoreparties.co/${group}`;
         this.token = token;
         /*
             Можно лучше: адрес с сервера передавать в конструктор класса
         */
-        this.base = `https://nomoreparties.co/${group}`;
+        // this.base = `https://nomoreparties.co/${group}`;
+        this.base = serverUrl;
     }
 
     getResource = async (url)=>{
