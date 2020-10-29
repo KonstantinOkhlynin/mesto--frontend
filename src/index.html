@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Mesto</title>
-  <link rel="stylesheet" href="./pages/index.css">
+  <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.css %>">
 </head>
 <body class = "body">
   <div class="root">
     <header class="header root__section">
-      <img src="./images/logo.svg" alt="mesto logo" class="logo">
+      <img src="<%=require('./images/logo.svg')%>" alt="mesto logo" class="logo">
     </header>
     <div class="profile root__section">
       <div class="user-info">
@@ -28,7 +28,7 @@
    
     <div class="popup" id="popupNewCard" >
       <div class="popup__content">
-        <img src="./images/close.svg" alt="" class="popup__close">
+        <img src="<%=require('./images/close.svg')%>" alt="" class="popup__close">
         <h3 class="popup__title">Новое место</h3>
         <form class="popup__form" name="new" id="formNewCard" novalidate >
             <input type="text" name="name" class="popup__input popup__input_type_name" autocomplete="off" required minlength="2" maxlength="30"placeholder="Название" id="nameCard">
@@ -42,7 +42,7 @@
 
     <div class="popup" id="popupEditProfile" >
       <div class="popup__content">
-        <img src="./images/close.svg" alt="" class="popup__close">
+        <img src="<%=require('./images/close.svg')%>" alt="" class="popup__close">
         <h3 class="popup__title">Редактировать профиль</h3>
         <form class="popup__form" name="user" id="formEditProfile" novalidate >
             <input type="text" name="name" class="popup__input popup__input_type_name" required minlength="2" maxlength="30" placeholder="Имя"  id="nameProfile">
@@ -56,20 +56,11 @@
 
     <div class="popup" id="popupIncreaseImadge">
         <div class="popup__container">
-          <img src="./images/close.svg" alt="" class="popup__close" />
+          <img src="<%=require('./images/close.svg')%>" alt="" class="popup__close" />
           <img src="" alt="" class="popup__image" />
         </div>
     </div>
   </div>
-  <!-- <script src="pages/array.js"></script> -->
-  <script src="pages/api.js"></script>
-  <script src="pages/userInfo.js"></script>
-  <script src="pages/formValidator.js"></script>
-  <script src="pages/popup.js"></script>
-  <script src="pages/popupProfile.js"></script>
-  <script src="pages/popupImg.js"></script>
-  <script src="pages/card.js"></script>
-  <script src="pages/cardList.js"></script>
-  <script src="pages/index.js"></script>
+  <script src="<%= htmlWebpackPlugin.files.js %>"></script>
 </body>
 </html>

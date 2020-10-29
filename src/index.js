@@ -1,3 +1,13 @@
+
+import "./style.css";
+import {Api} from './pages/api.js';
+import {Card} from './pages/card.js';
+import {CardList} from './pages/cardList.js';
+import {FormValidator} from './pages/formValidator.js';
+import {Popup} from './pages/popup.js';
+import {PopupImg} from './pages/popupImg.js';
+import {PopupProfile} from './pages/popupProfile.js';
+import {UserInfo} from './pages/userInfo.js';
 ;(async ()=>{
     const nameField = document.querySelector('#nameProfile');
     const descriptionField = document.querySelector('#descriptionProfile');
@@ -88,6 +98,9 @@
         popupNewCard.close()
     })
 })()
+
+
+
 
 /*
     Класс Api создан и запросы на сервер выполняются, отлично, что Вы попробовали
