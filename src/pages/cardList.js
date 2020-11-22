@@ -1,18 +1,21 @@
+import {Card} from './pages/card.js';
 export class CardList {
-    constructor(cards, targetElement){
-        this.cards = cards;
-        this.targetElement = targetElement;
+    constructor(conteiner){
+        this.conteiner = conteiner;
     }
-    addCard = (card) =>{
-        this.cards = [...this.cards, card]
-        this.appendCard(card.createMarkup());
-    }
+    
     appendCard = (card) => {
-        this.targetElement.appendChild(card);
+        this.conteiner.appendChild(card);
     }
-    render = () =>{
-        this.cards.forEach((card)=>{
-            this.appendCard(card.createMarkup())
+    renderCards = (data) =>{
+        const cards = [];
+        data.forEach((cardInfo)=>{
+            const card = new Card(cardInfo,popupImadgeCard);
+            cards.push(card);
         })
+
+        cards.forEach((card)=>{
+            this.appendCard(card.createCard())
+        })  
     }
 }
