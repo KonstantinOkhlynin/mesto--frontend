@@ -1,4 +1,4 @@
-import {Card} from './pages/card.js';
+import {Card} from './Card.js';
 export class CardList {
     constructor(conteiner){
         this.conteiner = conteiner;
@@ -10,12 +10,13 @@ export class CardList {
     renderCards = (data) =>{
         const cards = [];
         data.forEach((cardInfo)=>{
-            const card = new Card(cardInfo,popupImadgeCard);
+            const card = new Card(cardInfo);
             cards.push(card);
+            card.likess();
         })
 
         cards.forEach((card)=>{
-            this.appendCard(card.createCard())
+            this.appendCard(card.createCard());
         })  
     }
 }

@@ -14,7 +14,7 @@ export class FormValidator{
             valid = false;
         };
 
-        if(validity.tooShort || validity.tooLong){
+        if(input.validity.tooShort || validity.tooLong){
         input.setCustomValidity('Должно быть от 2 до 30 символов');
         valid = false;
         }

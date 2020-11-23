@@ -1,43 +1,42 @@
 
 import "./style.css";
-import {Api} from './pages/Api.js';
 import {CardList} from './pages/CardList.js';
+import {UserInfo} from './pages/UserInfo.js';
+import {Api} from './pages/Api.js';
 import {FormValidator} from './pages/formValidator.js';
 import {Popup} from './pages/Popup.js';
-import {PopupImg} from './pages/popupImg.js';
+// import {PopupImg} from './pages/popupImg.js';
 import {PopupAvatar} from './pages/PopupAvatar.js';
-import {UserInfo} from './pages/userInfo.js';
 
 const popupCard = document.querySelector('.popupCard');
 const popupUser = document.querySelector('.popupUser');
 const popupAvatar = document.querySelector('.popupAvatar');
 const popupImadgeCard = document.querySelector('.popupImadgeCard');
 
-const popupCardForm = popupCard.querySelector('form');
+const popupCardForm = popupCard.querySelector('.popup__form');
 const popupUserForm = popupUser.querySelector('form');
 const popupAvatarForm = popupAvatar.querySelector('form');
-const popupImadgeCardForm = popupImadgeCard.querySelector('form');
+// const popupImadgeCardForm = popupImadgeCard.querySelector('form');
 
-const userInfoButtonCard = popupImadgeCard.querySelector('.button user-info__button');
-const userInfoButtonEdit = popupAvatar.querySelector('.user-info__button-edit');
-const userinfoPhoto = popupCard.querySelector('.user-info__photo');
+const userInfoButtonCard = document.querySelector('.user-info__button');
+const userInfoButtonEdit = document.querySelector('.user-info__button-edit');
+const userinfoPhoto = document.querySelector('.user-info__photo');
 
-const userInfoName = popupUser.querySelector('.user-info__name');
-const userInfoDescription = popupAvatar.querySelector('.user-info__description');
-const inputNameUser = popupImadgeCard.querySelector('#nameUser');
-const inputDescriptionUser = popupImadgeCard.querySelector('#descriptionUser');
-const placesList = popupImadgeCard.querySelector('.places-list');
+const userInfoName = document.querySelector('.user-info__name');
+const userInfoDescription = document.querySelector('.user-info__description');
+const inputNameUser = document.querySelector('#nameUser');
+const inputDescriptionUser = document.querySelector('#descriptionUser');
+const placesList = document.querySelector('.places-list');
+const placeCardDeleteIcon = document.querySelector('.place-card__delete-icon');
 
 const classPopupCard = new Popup(popupCard);
 const classPopupUser = new Popup(popupUser);
-const classPopupAvatar = new PopupAvatar(popupAvatar);
-const classPopupImadgeCard = new PopupImg(popupImadgeCard);
+export const classPopupAvatar = new PopupAvatar(popupAvatar, userinfoPhoto);
+// const classPopupImadgeCard = new PopupImg(popupImadgeCard);
 
-const UserInfo = new UserInfo(inputNameUser, inputDescriptionUser, userInfoName, userInfoDescription);
-
-const CardList = new CardList(placesList);
-
-const api = new Api();
+export const classUserInfo = new UserInfo(inputNameUser, inputDescriptionUser, userInfoName, userInfoDescription);
+export const classCardList = new CardList(placesList);
+export const classApi = new Api();
 
 const validatorFormCard = new FormValidator(popupCardForm);
 const validatorFormUser = new FormValidator(popupUserForm);
@@ -69,7 +68,7 @@ userinfoPhoto.addEventListener('click', (event) => {
 
 popupCardForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  api.addCard();
+  classApi.addCard();
   classPopupCard.close();
   popupCardForm.reset();
   validatorFormCard.setSubmitButtonState(false);
@@ -77,24 +76,31 @@ popupCardForm.addEventListener('submit', (event) => {
 
 popupUserForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  api.updateUser();
+  classApi.updateUser();
+  classUserInfo.loading();
   classPopupUser.close();
-  popupUserForm.reset();
   validatorFormUser.setSubmitButtonState(false);
 });
 
 popupAvatarForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  api.updateAvatar();
+  classApi.updateAvatar();
   classPopupAvatar.close();
   popupAvatarForm.reset();
   validatorFormAvatar.setSubmitButtonState(false);
 });
 
+// placeCardDeleteIcon.addEventListener('click', (event) => {
+//   event.preventDefault();
+//   classApi.deleteCard(event.target.dataset.id);
+// });
+
 
 validatorFormCard.setSubmitButtonState(false);
 validatorFormUser.setSubmitButtonState(false);
 validatorFormAvatar.setSubmitButtonState(false);
-api.getCards();
-api.getUser();
-api.getAvatar();
+classApi.getCards();
+classApi.getUser();
+classApi.getAvatar();
+// 
+

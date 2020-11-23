@@ -1,3 +1,4 @@
+import {Popup} from './Popup.js';
 export class PopupAvatar extends Popup {
   constructor(popup, conteinerAvatar){
     super(popup);

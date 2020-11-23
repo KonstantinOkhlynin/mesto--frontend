@@ -7,9 +7,14 @@ export class UserInfo{
     }
 
     loadingUser (nameServer, descriptionServer) {
-        this.inputName = nameServer;
-        this.inputDescription = descriptionServer;
-        this.nameUser.textContent = this.inputName;
-        this.descriptionUser.textContent = this.inputDescription;
+        this.inputName.value = nameServer;
+        this.inputDescription.value = descriptionServer;
+        this.nameUser.textContent = nameServer;
+        this.descriptionUser.textContent = descriptionServer;
+    }
+
+    loading() {;
+        this.nameUser.textContent = this.inputName.value;
+        this.descriptionUser.textContent = this.inputDescription.value;
     }
 }
