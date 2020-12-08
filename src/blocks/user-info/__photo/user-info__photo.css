@@ -5,7 +5,8 @@
   border-radius: 50%;
   background-size: cover;
   background-position: center;
-  background-image: url(../../../images/avatar.jpg);
+  /* background-image: url(../../../images/avatar.jpg); */
+  /* background-image: url(https://ia.wampi.ru/2020/11/19/GkoSGolFzH0.jpg); */
 }
 
 @media screen and (max-width: 980px) {

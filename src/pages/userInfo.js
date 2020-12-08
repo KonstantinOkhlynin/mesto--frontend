@@ -1,23 +1,20 @@
 export class UserInfo{
-    constructor(userInfoName, userInfoJob ){
-        this.name = 'Jaques Causteau2';
-        this.job = 'Sailor, Researcher';
-        this.userInfoJob = userInfoJob;
-        this.userInfoName = userInfoName;
+    constructor(inputName,inputDescription, nameUser, descriptionUser){
+       this.inputName = inputName;
+       this.inputDescription = inputDescription; 
+       this.nameUser = nameUser;
+       this.descriptionUser = descriptionUser;
     }
 
-    setUserInfo = (name, job) => {
-        this.name = name;
-        this.job = job;
+    loadingUser (nameServer, descriptionServer) {
+        this.inputName.value = nameServer;
+        this.inputDescription.value = descriptionServer;
+        this.nameUser.textContent = nameServer;
+        this.descriptionUser.textContent = descriptionServer;
     }
 
-    getUserInfo = () => {
-        const {name,job}=this;
-        return {name, job}
-    }
-    updateUserInfo = () => {
-        const {userInfoName, userInfoJob} = this;
-        userInfoName.textContent = this.name;
-        userInfoJob.textContent = this.job;
+    loading() {;
+        this.nameUser.textContent = this.inputName.value;
+        this.descriptionUser.textContent = this.inputDescription.value;
     }
 }

@@ -1,155 +1,125 @@
 
 import "./style.css";
-import {Api} from './pages/api.js';
-import {Card} from './pages/card.js';
-import {CardList} from './pages/cardList.js';
-import {FormValidator} from './pages/formValidator.js';
-import {Popup} from './pages/popup.js';
-import {PopupImg} from './pages/popupImg.js';
-import {PopupProfile} from './pages/popupProfile.js';
-import {UserInfo} from './pages/userInfo.js';
-;(async ()=>{
-    const nameField = document.querySelector('#nameProfile');
-    const descriptionField = document.querySelector('#descriptionProfile');
 
-    const api = new Api('a52cee62-1a4c-4ffb-bcca-6afcb9f95180','cohort12');
+import {Card} from './pages/Card.js';
 
-    const newCard = document.querySelector('#popupNewCard'),
-        editProfile = document.querySelector('#popupEditProfile'),
-        increaseImage = document.querySelector('#popupIncreaseImadge')
+import {CardList} from './pages/CardList.js';
+import {UserInfo} from './pages/UserInfo.js';
+import {Api} from './pages/Api.js';
+import {FormValidator} from './pages/FormValidator.js';
+import {Popup} from './pages/Popup.js';
+import {PopupImg} from './pages/PopupImg.js';
+import {PopupAvatar} from './pages/PopupAvatar.js';
 
-    const popupNewCard = new Popup(newCard),
-        popupEditProfile = new PopupProfile(editProfile),
-        popupIncreaseImage = new PopupImg(increaseImage);
+const popupCard = document.querySelector('.popupCard');
+const popupUser = document.querySelector('.popupUser');
+const popupAvatar = document.querySelector('.popupAvatar');
+const popupImadgeCard = document.querySelector('.popupImadgeCard');
 
-    const userInfoNameNode = document.querySelector('.user-info__name'),
-        userInfoJobNode = document.querySelector('.user-info__job');
-    
-    const userInfo = new UserInfo(userInfoNameNode,userInfoJobNode);
-    let gettingUserInfo;
+const popupCardForm = popupCard.querySelector('form');
+const popupUserForm = popupUser.querySelector('form');
+const popupAvatarForm = popupAvatar.querySelector('form');
+// const popupImadgeCardForm = popupImadgeCard.querySelector('form');
 
-    const cards = [];
+const userInfoButtonCard = document.querySelector('.user-info__button');
+const userInfoButtonEdit = document.querySelector('.user-info__button-edit');
+const userinfoPhoto = document.querySelector('.user-info__photo');
 
-    api.getUserInfo()
-            .then((info)=>{
-                gettingUserInfo=info
-                userInfo.setUserInfo(gettingUserInfo.name, gettingUserInfo.about);
-                userInfo.updateUserInfo();
-            })
-            .catch((e)=>{console.log(e); gettingUserInfo = {name:'unknown',info:'unknown'}});
+const userInfoName = document.querySelector('.user-info__name');
+const userInfoDescription = document.querySelector('.user-info__description');
+const inputNameUser = document.querySelector('#nameUser');
+const inputDescriptionUser = document.querySelector('#descriptionUser');
+const placesList = document.querySelector('.places-list');
+// const placeCardDeleteIcon = document.querySelector('.place-card__delete-icon');
+
+const classApi = new Api();
+
+const classPopupCard = new Popup(popupCard);
+const classPopupUser = new Popup(popupUser);
+const classPopupAvatar = new PopupAvatar(popupAvatar, userinfoPhoto);
+const classPopupImadgeCard = new PopupImg(popupImadgeCard);
+
+const classUserInfo = new UserInfo(inputNameUser, inputDescriptionUser, userInfoName, userInfoDescription);
+const classCardList = new CardList(placesList);
 
 
-    let initialCards;
-    let cardList
-    api.getCards()
+const cards = [];
+
+classApi.getCards()
         .then((initialCards)=>{   
             initialCards.forEach((cardInfo)=>{
-                const card = new Card(cardInfo,popupIncreaseImage);
+                const card = new  Card(cardInfo, classApi, classPopupImadgeCard);
                 console.dir(card);
                 cards.push(card);
-            });
-            cardList = new CardList(cards,placesList);
-            cardList.render();
-        })
-        .catch((e)=>{console.log(e); initialCards = []});
-
-    const placesList = document.querySelector('.places-list');
-
-
-    const newCardButton = document.querySelector('.user-info__button');
-    newCardButton.addEventListener('click', popupNewCard.open);
-
-
-    const editProfileButton = document.querySelector('.user-info__button-edit');
-    editProfileButton.addEventListener('click', ()=>{popupEditProfile.open(userInfo.getUserInfo())});
-
-    const newCardValidator = new FormValidator(newCard.querySelector('form')),
-        profileValidator = new FormValidator(editProfile.querySelector('form'));
-
-    newCardValidator.setEventListener();
-    profileValidator.setEventListener();
-
-
-    const editProfileForm = editProfile.querySelector('form');
-    const newCardForm = newCard.querySelector('form');
-    editProfileForm.addEventListener('submit', async (event)=>{
-        event.preventDefault();
-        const name = nameField.value,
-            about = descriptionField.value;
-        api.updateUserInfo({name, about})
-            .then((info)=>{
-                userInfo.setUserInfo(info.name, info.about);
-                userInfo.updateUserInfo();
-                popupEditProfile.close();
             })
-            .catch((e)=>{alert(`Update Error ${e}`)});
-    })
-
-    newCardForm.addEventListener('submit',  (event) => {
-        event.preventDefault();
-        const name = newCardForm.querySelector('#nameCard');
-        const link = newCardForm.querySelector('#imageCard');
-        const cardInfo= {name: name.value, link:link.value};
-        const card = new Card(cardInfo, popupIncreaseImage);
-        cardList.addCard(card);
-        newCardValidator.setSubmitButtonState(false);
-        name.value = '';
-        link.value = '';
-        popupNewCard.close()
-    })
-})()
+           return classCardList.renderCards(cards);
+        })
 
 
 
 
-/*
-    Класс Api создан и запросы на сервер выполняются, отлично, что Вы попробовали
-    использовать async/await, но с ним есть проблемы:
-
-    Надо исправить:
-    - никогда не используйте await в функции инициализации скрипта, это выполняет
-    блокировку работы скрипта, пока запрос не выполнится, а на странице может быть ещё много логики 
-    которая не связана с этим запрос. В крайнем случае вызывайте эту загрузку в самом конце скрипта
-
-    - совмещать await с then/catch не имеет смысла, привел пример правильной организации
-    для отправки данных пользователя. При использовании async/await - then там вообще не нужен
-    А обработка ошибок должна выполняться блоком try/catch
-
-    Можно лучше:
-    - для загрузки начальных данных используйте Promise.all - запросы выполняются параллельно, что ускоряет
-    загрузку, по сравнению с тем, как это сделано сейчас
 
 
 
-*/
+const validatorFormCard = new FormValidator(popupCardForm);
+const validatorFormUser = new FormValidator(popupUserForm);
+const validatorFormAvatar = new FormValidator(popupAvatarForm);
 
-/*
-  Отлично, замечания исправлены
+validatorFormCard.setEventListener();
+validatorFormUser.setEventListener();
+validatorFormAvatar.setEventListener();
 
-  Для закрепления полученных знаний советую сделать и оставшуюся часть задания.
-  Что бы реализовать оставшуюся часть задания необходимо разобраться с Promise.all
-  https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
-  Для отрисовки карточек нужен id пользователя, поэтому отрисовать мы сможем их только
-  после получения с сервера данных пользователя
-  Выглядит этот код примерно так:
-    Promise.all([     //в Promise.all передаем массив промисов которые нужно выполнить
-      api.getUserData(),
-      api.getInitialCards()
-    ])    
-      .then((values)=>{    //попадаем сюда когда оба промиса будут выполнены
-        const [userData, initialCards] = values;
-        ......................  //все данные получены, отрисовываем страницу
-      })
-      .catch((err)=>{     //попадаем сюда если один из промисов завершится ошибкой
-        console.log(err);
-      })
-      
-  Успехов в дальнейшем обучении!
-*/
+userInfoButtonCard.addEventListener('click', (event) => {
+  event.preventDefault();
+  classPopupCard.open();
+});
 
-/* REVIEW:
+userInfoButtonEdit.addEventListener('click', (event) => {
+  event.preventDefault();
+  classPopupUser.open();
+});
 
-Все критические ошибки были исправлены, отличная работа! 
-Спасибо за усилия и старания, удачи в следующем спринте и успехов в дальнейшем обучении 🖤
+userinfoPhoto.addEventListener('click', (event) => {
+  event.preventDefault();
+  classPopupAvatar.open();
+});
 
-*/
+
+
+popupCardForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  classApi.addCard();
+  classPopupCard.close();
+  popupCardForm.reset();
+  validatorFormCard.setSubmitButtonState(false);
+});
+
+popupUserForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  classApi.updateUser();
+  classUserInfo.loading();
+  classPopupUser.close();
+  validatorFormUser.setSubmitButtonState(false);
+});
+
+popupAvatarForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  classApi.updateAvatar();
+  classPopupAvatar.close();
+  popupAvatarForm.reset();
+  validatorFormAvatar.setSubmitButtonState(false);
+});
+
+
+validatorFormCard.setSubmitButtonState(false);
+validatorFormUser.setSubmitButtonState(false);
+validatorFormAvatar.setSubmitButtonState(false);
+classApi.getUser()
+.then((user) => {
+  classUserInfo.loadingUser(user.name, user.about);
+});
+classApi.getAvatar()
+.then((user) => {
+  classPopupAvatar.editAvatar(user.avatar);
+});
+
