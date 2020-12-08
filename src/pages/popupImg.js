@@ -1,3 +1,4 @@
+import {Popup} from './Popup.js';
 export class PopupImg extends Popup{
     constructor(popup){
         super(popup)

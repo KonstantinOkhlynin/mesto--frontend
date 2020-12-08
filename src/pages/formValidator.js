@@ -6,7 +6,7 @@ export class FormValidator{
 
     checkInputValidly = (input, singleField = true) => {
         let valid = true;
-        input.setCustomValidity(" ");
+        input.setCustomValidity("");
         const validity = input.validity;
 
         if(validity.valueMissing){

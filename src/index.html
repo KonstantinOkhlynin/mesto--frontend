@@ -33,8 +33,8 @@
         <form class="popup__form" name="card" id="formNewCard" novalidate >
             <input type="text" name="name" class="popup__input popup__input_type_name" autocomplete="off" required minlength="2" maxlength="30"placeholder="Название" id="nameCard">
             <span id="nameCard-error" class="popup__error"></span>
-            <input type="url" name="link" class="popup__input popup__input_type_link-url"autocomplete="off" required placeholder="Ссылка на картинку" id="linkCard">
-            <span id="imageCard-error" class="popup__error"></span>
+            <input type="url" name="link" class="popup__input popup__input_type_link-url" autocomplete="off" required placeholder="Ссылка на картинку" id="linkCard">
+            <span id="linkCard-error" class="popup__error"></span>
             <button type="submit" class="button popup__button " id="buttonNewCard">+</button>
         </form>
       </div>
@@ -46,9 +46,9 @@
         <h3 class="popup__title">Редактировать профиль</h3>
         <form class="popup__form" name="user" id="formEditProfile" novalidate >
             <input type="text" name="name" class="popup__input popup__input_type_name" required minlength="2" maxlength="30" placeholder="Имя"  id="nameUser">
-            <span id="nameProfile-error" class="popup__error"></span>
+            <span id="nameUser-error" class="popup__error"></span>
             <input type="text" name="description" class="popup__input popup__input_type_link-url" required minlength="2" maxlength="30" placeholder="О себе" id="descriptionUser">
-            <span id="descriptionProfile-error" class="popup__error"></span>
+            <span id="descriptionUser-error" class="popup__error"></span>
             <button type="submit" class="button  popup__button popup__button_save " id="buttonSave">Сохранить</button>
         </form>
       </div>
@@ -59,8 +59,8 @@
         <img src="<%=require('./images/close.svg')%>" alt="" class="popup__close">
         <h3 class="popup__title">Редактировать профиль</h3>
         <form class="popup__form" name="avatar" id="formEditProfile" novalidate >
-            <input type="url" name="link" class="popup__input popup__input_type_link-url" required minlength="2" maxlength="30" placeholder="О себе" id="linkAvatar">
-            <span id="descriptionProfile-error" class="popup__error"></span>
+            <input type="url" name="link" class="popup__input popup__input_type_link-url" required minlength="2" maxlength="30" autocomplete="off" placeholder="О себе" id="linkAvatar">
+            <span id="linkAvatar-error" class="popup__error"></span>
             <button type="submit" class="button  popup__button popup__button_save" id="buttonSave">Сохранить</button>
         </form>
       </div>

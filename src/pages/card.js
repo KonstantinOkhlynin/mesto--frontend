@@ -1,25 +1,16 @@
-import {classApi} from '../index.js';
 export class Card {
-    constructor(cardInfo,popup) {
+    constructor(cardInfo, api, popup) {
         this.name = cardInfo.name;
         this.link = cardInfo.link;
         this.likes = cardInfo.likes;
         this.cardId = cardInfo._id;
         this.ownerId = cardInfo.owner._id;
+        this.owner = cardInfo.owner;
         this.isLike = false;
+        this.Api = api;
         this.popup = popup;
-        this.markup = null;
-        this.Api = classApi;
     }
-    likess = () => {
-        const placeCardLikeIcon = document.querySelector('.place-card__like-icon')
-    this.likes.forEach(item => {
-        if (item._id === this.ownerId) {
-          placeCardLikeIcon.add('place-card__like-icon_liked');
-        }
-      });
-    }
-
+    
     createCard = () => {
         const placeCard = document.createElement('div');
         const placeCardImage = document.createElement('div');
@@ -48,7 +39,19 @@ export class Card {
       
         placeCardLikeIcon.addEventListener('click', this.like);
         placeCardDeleteIcon.addEventListener('click', this.removeCard);
+        placeCardImage.addEventListener('click', this.popup.open)
+        
+        // отрисовка активной кнопки удаления если карточка может быть удалена
+        // console.log(this._data);
+        if (this.owner && this.ownerId === "b16cda09e23c061669f7026b") {
+          placeCardDeleteIcon.setAttribute('style', 'display: block');
+      }
+      // отрисовка активных лайков на лайкнутые карточки
+      if (this.likes.find(item => item._id === "b16cda09e23c061669f7026b")) {
+        placeCardLikeIcon.classList.add('place-card__like-icon_liked');
+      }
 
+     this.count = placeCardLikeCount;
 
         placeCard.appendChild(placeCardImage);
         placeCardImage.appendChild(placeCardDeleteIcon);
@@ -57,30 +60,45 @@ export class Card {
         placeCardDescription.appendChild(placecardLikes);
         placecardLikes.appendChild(placeCardLikeIcon);
         placecardLikes.appendChild(placeCardLikeCount);
-        this.markup = placeCard;
         return placeCard;
+        
     }
 
 
   like = (event) =>{
+    const likeCount = event.target.closest('.place-card__likes').querySelector('.place-card__like-count');
     if (!event.target.matches('.place-card__like-icon_liked')) {
         this.Api.likeCard(this.cardId)
-            //   likeCount.textContent = result.likes.length;
-              event.target.classList.add('place-card__like-icon_liked');
-        
+        .then(result => {
+          likeCount.textContent = result.likes.length;
+          event.target.classList.add('place-card__like-icon_liked');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       } else {
         this.Api.disLikeCard(this.cardId)
-            //   likeCount.textContent = result.likes.length;
-              event.target.classList.remove('place-card__like-icon_liked');
+        .then(result => {
+          likeCount.textContent = result.likes.length;
+          event.target.classList.remove('place-card__like-icon_liked');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
         
       }
   }
 
-  removeEventListeners = (target) =>{ 
-      target.querySelector('.place-card__like-icon').removeEventListener('click',this.like);
-      target.querySelector('.place-card__delete-icon').removeEventListener('click',this.delete);
+  openImg(event) {
+    const popupImadgeCard = document.querySelector('.popupImadgeCard')
+    if (!event.target.matches('.place-card__image')){
+        super.open();
+        const popupImg = popupImadgeCard.querySelector('.popup__image') 
+        popupImg.src = event.target.dataset.link;
+    }
+}
 
-  }
+  
   removeCard = (event) => {
       console.log(this.cardId);
       if (confirm('Вы действительно хотите удалить эту карточку?')) {

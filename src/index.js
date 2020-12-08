@@ -1,11 +1,14 @@
 
 import "./style.css";
+
+import {Card} from './pages/Card.js';
+
 import {CardList} from './pages/CardList.js';
 import {UserInfo} from './pages/UserInfo.js';
 import {Api} from './pages/Api.js';
-import {FormValidator} from './pages/formValidator.js';
+import {FormValidator} from './pages/FormValidator.js';
 import {Popup} from './pages/Popup.js';
-// import {PopupImg} from './pages/popupImg.js';
+import {PopupImg} from './pages/PopupImg.js';
 import {PopupAvatar} from './pages/PopupAvatar.js';
 
 const popupCard = document.querySelector('.popupCard');
@@ -13,7 +16,7 @@ const popupUser = document.querySelector('.popupUser');
 const popupAvatar = document.querySelector('.popupAvatar');
 const popupImadgeCard = document.querySelector('.popupImadgeCard');
 
-const popupCardForm = popupCard.querySelector('.popup__form');
+const popupCardForm = popupCard.querySelector('form');
 const popupUserForm = popupUser.querySelector('form');
 const popupAvatarForm = popupAvatar.querySelector('form');
 // const popupImadgeCardForm = popupImadgeCard.querySelector('form');
@@ -27,16 +30,36 @@ const userInfoDescription = document.querySelector('.user-info__description');
 const inputNameUser = document.querySelector('#nameUser');
 const inputDescriptionUser = document.querySelector('#descriptionUser');
 const placesList = document.querySelector('.places-list');
-const placeCardDeleteIcon = document.querySelector('.place-card__delete-icon');
+// const placeCardDeleteIcon = document.querySelector('.place-card__delete-icon');
+
+const classApi = new Api();
 
 const classPopupCard = new Popup(popupCard);
 const classPopupUser = new Popup(popupUser);
-export const classPopupAvatar = new PopupAvatar(popupAvatar, userinfoPhoto);
-// const classPopupImadgeCard = new PopupImg(popupImadgeCard);
+const classPopupAvatar = new PopupAvatar(popupAvatar, userinfoPhoto);
+const classPopupImadgeCard = new PopupImg(popupImadgeCard);
 
-export const classUserInfo = new UserInfo(inputNameUser, inputDescriptionUser, userInfoName, userInfoDescription);
-export const classCardList = new CardList(placesList);
-export const classApi = new Api();
+const classUserInfo = new UserInfo(inputNameUser, inputDescriptionUser, userInfoName, userInfoDescription);
+const classCardList = new CardList(placesList);
+
+
+const cards = [];
+
+classApi.getCards()
+        .then((initialCards)=>{   
+            initialCards.forEach((cardInfo)=>{
+                const card = new  Card(cardInfo, classApi, classPopupImadgeCard);
+                console.dir(card);
+                cards.push(card);
+            })
+           return classCardList.renderCards(cards);
+        })
+
+
+
+
+
+
 
 const validatorFormCard = new FormValidator(popupCardForm);
 const validatorFormUser = new FormValidator(popupUserForm);
@@ -45,7 +68,6 @@ const validatorFormAvatar = new FormValidator(popupAvatarForm);
 validatorFormCard.setEventListener();
 validatorFormUser.setEventListener();
 validatorFormAvatar.setEventListener();
-
 
 userInfoButtonCard.addEventListener('click', (event) => {
   event.preventDefault();
@@ -61,8 +83,6 @@ userinfoPhoto.addEventListener('click', (event) => {
   event.preventDefault();
   classPopupAvatar.open();
 });
-
-
 
 
 
@@ -90,17 +110,16 @@ popupAvatarForm.addEventListener('submit', (event) => {
   validatorFormAvatar.setSubmitButtonState(false);
 });
 
-// placeCardDeleteIcon.addEventListener('click', (event) => {
-//   event.preventDefault();
-//   classApi.deleteCard(event.target.dataset.id);
-// });
-
 
 validatorFormCard.setSubmitButtonState(false);
 validatorFormUser.setSubmitButtonState(false);
 validatorFormAvatar.setSubmitButtonState(false);
-classApi.getCards();
-classApi.getUser();
-classApi.getAvatar();
-// 
+classApi.getUser()
+.then((user) => {
+  classUserInfo.loadingUser(user.name, user.about);
+});
+classApi.getAvatar()
+.then((user) => {
+  classPopupAvatar.editAvatar(user.avatar);
+});
 

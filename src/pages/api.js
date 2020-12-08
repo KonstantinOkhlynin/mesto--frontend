@@ -1,22 +1,20 @@
-import {classUserInfo,classCardList,classPopupAvatar} from '../index';
 export class Api{
     constructor(){
         this.url = `http://nomoreparties.co/cohort12`;
     }
 
     getCards = () => {
-        fetch (`${this.url}/cards`, { 
+        return fetch (`${this.url}/cards`, { 
             headers: {
                 authorization: 'a52cee62-1a4c-4ffb-bcca-6afcb9f95180',
             }
         })
-        .then((card) => {
-            return card.json();
-        })
-        .then((card) => {
-            console.log(card);
-            classCardList.renderCards(card);
-        }) 
+        .then(res => {
+            if (res.ok) {
+              return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+          })
     }
 
     addCard = () => {
@@ -34,7 +32,7 @@ export class Api{
     }
 
     likeCard = (id) => {
-        fetch (`${this.url}/cards/like/${id}`, { 
+        return fetch (`${this.url}/cards/like/${id}`, { 
             method: 'PUT',
             headers: {
                 authorization: 'a52cee62-1a4c-4ffb-bcca-6afcb9f95180',
@@ -52,12 +50,20 @@ export class Api{
     }
 
     disLikeCard = (id) => {
-        fetch (`${this.url}/cards/like/${id}`, { 
+        return fetch (`${this.url}/cards/like/${id}`, { 
             method: 'DELETE',
             headers: {
                 authorization: 'a52cee62-1a4c-4ffb-bcca-6afcb9f95180',
                 'Content-Type': 'application/json'
             }
+        }).then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        })
+        .catch((err) => {
+            return Promise.reject(err);
         })
     }
 
@@ -72,7 +78,7 @@ export class Api{
     }
 
     getUser = () => {
-        fetch (`${this.url}/users/me`, { 
+       return fetch (`${this.url}/users/me`, { 
             headers: {
                 authorization: 'a52cee62-1a4c-4ffb-bcca-6afcb9f95180',
             }
@@ -80,9 +86,6 @@ export class Api{
         .then((user) => {
             return user.json();
         })
-        .then((user) => {
-            classUserInfo.loadingUser(user.name, user.about);
-        }) 
     }
 
     updateUser = () => {
@@ -100,7 +103,7 @@ export class Api{
     }
 
     getAvatar = () => {
-        fetch (`${this.url}/users/me`, { 
+        return fetch (`${this.url}/users/me`, { 
             headers: {
                 authorization: 'a52cee62-1a4c-4ffb-bcca-6afcb9f95180',
             }
@@ -108,9 +111,6 @@ export class Api{
         .then((avatar) => {
             return avatar.json();
         })
-        .then((avatar) => {
-            classPopupAvatar.editAvatar(avatar.avatar);
-        }) 
     }
 
     updateAvatar = () => {
