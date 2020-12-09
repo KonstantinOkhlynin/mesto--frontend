@@ -1,6 +1,6 @@
 export class Api{
     constructor(){
-        this.url = `http://nomoreparties.co/cohort12`;
+        this.url = `https://nomoreparties.co/cohort12`;
     }
 
     getCards = () => {
