@@ -7,5 +7,5 @@
 ---
    [![Header](https://github.com/KonstantinOkhlynin/LearnToLearn/blob/master/assets/22.svg)](https://konstantinokhlynin.github.io/Mesto/)
 
-    ![Header](https://github.com/KonstantinOkhlynin/LearnToLearn/blob/master/assets/4.svg)
+    ![Header](https://github.com/KonstantinOkhlynin/Mesto/blob/master/assets/READMEREPOSITORIES.svg)
    
