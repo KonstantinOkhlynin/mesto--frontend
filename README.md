@@ -1,7 +1,25 @@
-   ![Header](https://github.com/KonstantinOkhlynin/LearnToLearn/blob/master/assets/Headergithubname%20(2).svg)
-
-
-
-   [![Header](https://github.com/KonstantinOkhlynin/LearnToLearn/blob/master/assets/1.svg)](https://github.com/KonstantinOkhlynin/Mesto/blob/master/README.EN.MD)
-   [![Header](https://github.com/KonstantinOkhlynin/LearnToLearn/blob/master/assets/2.svg)](https://konstantinokhlynin.github.io/Mesto/)
-     ![Header](https://github.com/KonstantinOkhlynin/Mesto/blob/master/assets/READMEREPOSITORIESS.svg)
+# Author: Konstantin Okhlynin
+# [**English Readme**](https://github.com/KonstantinOkhlynin/Mesto/blob/master/README.EN.MD)
+# [**Сайт**](https://konstantinokhlynin.github.io/Mesto/)
+# Mesto
+### Небольшой проект для взаимодействия с сервером, задачей которго является укрепление знаний JavaScript, ООП, а также работой с API.
+## Языки
+### ‣ HTML5;
+### ‣ CSS3;
+## Методология
+### ‣ БЭМ;
+## Инструкция по развёртыванию
+### 1. Вы можете открыть веб-сайт нажав на кнопку `Сайт` в самом начале Readme.
+### 2. Для развёртывания веб-сайта на своём локальном компьютере нужно:
+#### ‣ Склонировать репозиторий на свой локальный компьютер c помощью команды:
+```bash
+# git clone https://github.com/KonstantinOkhlynin/Mesto.git
+``` 
+#### ‣ Установить зависимости с помощью команды: 
+```bash
+# npm install
+``` 
+#### ‣ Запустить веб-сайт с помощью команды: 
+```bash
+# npm install
+``` 
