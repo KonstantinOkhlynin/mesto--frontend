@@ -1,5 +1,5 @@
 # Author: Konstantin Khlynin
-# [**Website**](https://konstantinokhlynin.github.io/Mesto/)
+# [**Website**](https://konstantinokhlynin.github.io/mesto--frontend/)
 # Mesto
 ### A small project for interacting with the server, the task of which is to strengthen the knowledge of JavaScript, OOP, as well as working with the API.
 ## Languages
