@@ -1,6 +1,6 @@
 # Author: Konstantin Okhlynin
-# [**English Readme**](https://github.com/KonstantinOkhlynin/Mesto/blob/master/README.EN.MD)
-# [**Сайт**](https://konstantinokhlynin.github.io/Mesto/)
+# [**English Readme**](https://github.com/KonstantinOkhlynin/mesto--frontend/blob/master/README.EN.MD)
+# [**Сайт**](https://konstantinokhlynin.github.io/mesto--frontend/)
 # Mesto
 ### Небольшой проект для взаимодействия с сервером, задачей которго является укрепление знаний JavaScript, ООП, а также работой с API.
 ## Языки
